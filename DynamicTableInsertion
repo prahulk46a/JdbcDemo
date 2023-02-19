@@ -1,0 +1,54 @@
+package com.JdbcDemo;
+
+import java.sql.*;
+import java.util.*;
+
+public class JdbcDemo {
+
+	public static void main(String[] args) {
+  
+    //Sql Exception handling.
+		try {
+			//load the driver
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			
+			//Connection creation 
+			String url="jdbc:mysql://localhost:3306/jdbcdemo";
+			String username="root";
+			String password="Rahul@123";
+			
+			Connection con=DriverManager.getConnection(url,username,password);
+     
+     //Query creation.
+			String q="Insert into student(roll_no ,sname ,sid ) values(?,?,?)";
+			
+			//Insertion of data into table using PreparedStatement obj having method prepareStatement Which take query as a parameter
+			PreparedStatement pstmt=con.prepareStatement(q);
+			
+			Scanner sc=new Scanner(System.in);
+			System.out.println("Enter Rollno:");
+			int rollno=sc.nextInt();
+			
+			System.out.println("Enter Name:");
+			String name=sc.next();
+			
+			System.out.println("Enter StudentId:");
+			int studentId=sc.nextInt();                               
+			
+			pstmt.setInt(1, rollno);
+			pstmt.setString(2, name);
+			pstmt.setInt(3, studentId);
+			
+      //Execution of quer using prepared statement object.
+			pstmt.executeUpdate();
+			System.out.println("Update Executed...");
+			
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+}
